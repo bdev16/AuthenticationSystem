@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "A0A+zVsthCk=",
+  "dgSpecHash": "U75fGxMHuJU=",
   "success": true,
   "projectFilePath": "C:\\dev\\projetos\\AuthenticationSystem\\AuthenticationSystem.csproj",
   "expectedPackageFiles": [
@@ -19,6 +19,7 @@
     "C:\\Users\\Bruno\\.nuget\\packages\\microsoft.entityframeworkcore.design\\10.0.2\\microsoft.entityframeworkcore.design.10.0.2.nupkg.sha512",
     "C:\\Users\\Bruno\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\10.0.2\\microsoft.entityframeworkcore.relational.10.0.2.nupkg.sha512",
     "C:\\Users\\Bruno\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\10.0.2\\microsoft.entityframeworkcore.tools.10.0.2.nupkg.sha512",
+    "C:\\Users\\Bruno\\.nuget\\packages\\microsoft.extensions.configuration.json\\10.0.2\\microsoft.extensions.configuration.json.10.0.2.nupkg.sha512",
     "C:\\Users\\Bruno\\.nuget\\packages\\microsoft.extensions.dependencymodel\\10.0.2\\microsoft.extensions.dependencymodel.10.0.2.nupkg.sha512",
     "C:\\Users\\Bruno\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512",
     "C:\\Users\\Bruno\\.nuget\\packages\\microsoft.visualstudio.solutionpersistence\\1.0.52\\microsoft.visualstudio.solutionpersistence.1.0.52.nupkg.sha512",
@@ -32,5 +33,18 @@
     "C:\\Users\\Bruno\\.nuget\\packages\\system.composition.runtime\\9.0.0\\system.composition.runtime.9.0.0.nupkg.sha512",
     "C:\\Users\\Bruno\\.nuget\\packages\\system.composition.typedparts\\9.0.0\\system.composition.typedparts.9.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference Microsoft.Extensions.Configuration.Json will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "C:\\dev\\projetos\\AuthenticationSystem\\AuthenticationSystem.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\dev\\projetos\\AuthenticationSystem\\AuthenticationSystem.csproj",
+      "libraryId": "Microsoft.Extensions.Configuration.Json",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }
