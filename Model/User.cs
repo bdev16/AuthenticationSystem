@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,7 +8,9 @@ namespace AuthenticationSystem.Model
 {
     public class User
     {
-        public string email { get; set; }
-        public string senha {get; set; }
+        [Key]
+        public int Id { get; set; }
+        public string Email { get; set; }
+        public string Password {get; set; }
     }
 }
