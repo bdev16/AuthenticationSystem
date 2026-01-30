@@ -35,6 +35,19 @@ namespace AuthenticationSystem.Controller
             return Ok(user);
         }
 
+        [HttpGet]
+        public ActionResult<IEnumerable<User>> Get()
+        {
+            var usersList = _context.Users.ToList();
+
+            if (!usersList.Any())
+            {
+                return NotFound("There are no registered users.");
+            }
+
+            return Ok(usersList);
+        }
+
         [HttpGet("{id:int}")]
         public ActionResult<User> Get(int id)
         {
