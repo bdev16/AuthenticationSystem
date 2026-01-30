@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AuthenticationSystem.Controller
 {
     [ApiController]
-    [Route("UserController")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
 
@@ -20,5 +20,18 @@ namespace AuthenticationSystem.Controller
             _context = context;
         }
 
+        [HttpPost]
+        public ActionResult<User> Post(User user)
+        {
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return Ok(user);
+        }
     }
 }
