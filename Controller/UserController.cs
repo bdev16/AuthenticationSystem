@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AuthenticationSystem.Data;
 using AuthenticationSystem.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 namespace AuthenticationSystem.Controller
 {
@@ -30,6 +31,19 @@ namespace AuthenticationSystem.Controller
 
             _context.Users.Add(user);
             _context.SaveChanges();
+
+            return Ok(user);
+        }
+
+        [HttpGet("{id:int}")]
+        public ActionResult<User> Get(int id)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+
+            if (user is null)
+            {
+                return NotFound($"User {id} not found");
+            }
 
             return Ok(user);
         }
