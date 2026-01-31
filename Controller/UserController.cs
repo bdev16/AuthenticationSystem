@@ -77,5 +77,21 @@ namespace AuthenticationSystem.Controller
             return Ok(user);
 
         }
+
+        [HttpDelete]
+        public ActionResult<User> Delete(int id)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+
+            if (user is null)
+            {
+                return NotFound($"User {id} not found");
+            }
+
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+
+            return Ok(user);
+        }
     }
 }
