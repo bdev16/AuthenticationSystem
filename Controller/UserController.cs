@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AuthenticationSystem.Data;
 using AuthenticationSystem.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 
 namespace AuthenticationSystem.Controller
@@ -59,6 +60,22 @@ namespace AuthenticationSystem.Controller
             }
 
             return Ok(user);
+        }
+
+        [HttpPut("id:int")]
+        public ActionResult<User> Put(int id, User user)
+        {
+
+            if (user.Id != id)
+            {
+                return NotFound($"User {id} not found");
+            }
+            
+            _context.Entry(user).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return Ok(user);
+
         }
     }
 }
