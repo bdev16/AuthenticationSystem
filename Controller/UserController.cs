@@ -45,13 +45,8 @@ namespace AuthenticationSystem.Controller
                 return NotFound($"User {id} not found");
             }
 
-            var userDTO = new UserDTO
-            {
-              UserName = user.UserName!,
-              Email = user.Email!  
-            };
+            var userDTO = _mapper.Map<UserDTO>(user);
 
-            //return Ok(user);
             return Ok(userDTO);
         }
 
