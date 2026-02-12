@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AuthenticationSystem.Data;
-using AuthenticationSystem.Model;
+using AuthenticationSystem.DTO;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace AuthenticationSystem.Controller
 {
@@ -16,82 +12,84 @@ namespace AuthenticationSystem.Controller
     {
 
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public UserController(AppDbContext context)
+        public UserController(AppDbContext context, IMapper mapper)
         {
             _context = context;
-        }
-
-        [HttpPost]
-        public ActionResult<User> Post(User user)
-        {
-            if (user == null)
-            {
-                return BadRequest();
-            }
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
-
-            return Ok(user);
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public ActionResult<IEnumerable<UserDTO>> Get()
         {
-            var usersList = _context.Users.ToList();
+            var users = _context.Users.ToList();
 
-            if (!usersList.Any())
+            if (!users.Any())
             {
                 return NotFound("There are no registered users.");
             }
 
-            return Ok(usersList);
+            var usersDTO = _mapper.Map<IEnumerable<UserDTO>>(users);
+
+            return Ok(usersDTO);
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<User> Get(int id)
+        public ActionResult<UserDTO> Get(int id)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            var user = _context.Users.FirstOrDefault(x => x.Id == id.ToString());
 
             if (user is null)
             {
                 return NotFound($"User {id} not found");
             }
 
-            return Ok(user);
+            var userDTO = new UserDTO
+            {
+              UserName = user.UserName!,
+              Email = user.Email!  
+            };
+
+            //return Ok(user);
+            return Ok(userDTO);
         }
 
         [HttpPut("id:int")]
-        public ActionResult<User> Put(int id, User user)
+        public ActionResult<UserDTO> Put(int id, UserDTO userDTO)
         {
+            var user = _context.Users.FirstOrDefault(x => x.Id == id.ToString());
 
-            if (user.Id != id)
+            if (user.Id != id.ToString())
             {
                 return NotFound($"User {id} not found");
             }
             
-            _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
+            
 
-            return Ok(user);
+            //_context.Entry(user).State = EntityState.Modified;
+            //_context.SaveChanges();
+
+            // return Ok(user);
+            return Ok();
 
         }
 
         [HttpDelete]
-        public ActionResult<User> Delete(int id)
+        public ActionResult<UserDTO> Delete(int id)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            //var user = _context.Users.FirstOrDefault(x => x.Id == id);
 
-            if (user is null)
-            {
-                return NotFound($"User {id} not found");
-            }
+            //if (user is null)
+            //{
+                //return NotFound($"User {id} not found");
+            //}
 
-            _context.Users.Remove(user);
-            _context.SaveChanges();
+            //_context.Users.Remove(user);
+            //_context.SaveChanges();
 
-            return Ok(user);
+            //return Ok(user);
+            return Ok();
         }
     }
 }
