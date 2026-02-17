@@ -4,10 +4,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using AuthenticationSystem.DTOs.Mappings;
 
-var hasher = new PasswordHasher<IdentityUser>();
-var hash = hasher.HashPassword(null, "Bruno123@");
-Console.WriteLine(hash);
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
