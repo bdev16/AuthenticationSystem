@@ -17,7 +17,10 @@ builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
 
 builder.Services.AddControllers();
 
-builder.Services.AddAutoMapper(typeof(UserDTOMappingProfile));
+builder.Services.AddAutoMapper(
+    cfg => { },
+    typeof(UserDTOMappingProfile).Assembly 
+);
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
