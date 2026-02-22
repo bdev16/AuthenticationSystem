@@ -12,8 +12,8 @@ namespace AuthenticationSystem.DTOs.Mappings
     {
         public UserDTOMappingProfile()
         {
-            CreateMap<IdentityUser, UserDTO>().ReverseMap();
-            CreateMap<UserDTO, IdentityUser>().ReverseMap();
+            CreateMap<IdentityUser<int>, UserDTO>().ReverseMap();
+            CreateMap<UserDTO, IdentityUser<int>>().ReverseMap();
         }
     }
 }
