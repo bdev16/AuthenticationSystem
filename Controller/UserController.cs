@@ -3,6 +3,7 @@ using AuthenticationSystem.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthenticationSystem.Controller
 {
@@ -13,11 +14,13 @@ namespace AuthenticationSystem.Controller
 
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser<int>> _userManager;
 
-        public UserController(AppDbContext context, IMapper mapper)
+        public UserController(AppDbContext context, IMapper mapper, UserManager<IdentityUser<int>> userManager)
         {
             _context = context;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -38,7 +41,7 @@ namespace AuthenticationSystem.Controller
         [HttpGet("{id:int}")]
         public ActionResult<UserDTO> Get(int id)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id.ToString());
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
 
             if (user is null)
             {
@@ -51,23 +54,33 @@ namespace AuthenticationSystem.Controller
         }
 
         [HttpPut("id:int")]
-        public ActionResult<UserDTO> Put(int id, UserDTO userDTO)
+        public async Task<ActionResult<UserDTO>> Put(int id, UserDTO userDTO)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id.ToString());
+            var userExist = _context.Users.FirstOrDefault(x => x.Id == id);
 
-            if (user.Id != id.ToString())
+            if (userExist is null)
             {
                 return NotFound($"User {id} not found");
             }
             
-            
+            if (userDTO.UserId != id)
+            {
+                return BadRequest($"The Ids informed is not equals");
+            }
 
-            //_context.Entry(user).State = EntityState.Modified;
-            //_context.SaveChanges();
+           _mapper.Map(userDTO, userExist);
 
-            // return Ok(user);
-            return Ok();
 
+            var resultUpdateUser = await _userManager.UpdateAsync(userExist);
+
+            if (!resultUpdateUser.Succeeded)
+            {
+                return BadRequest(resultUpdateUser.Errors);
+            }
+
+            var userDTOResults = _mapper.Map<UserDTO>(userExist);
+
+            return Ok(userDTOResults);
         }
 
         [HttpDelete]
