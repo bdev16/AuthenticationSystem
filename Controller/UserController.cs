@@ -86,18 +86,18 @@ namespace AuthenticationSystem.Controller
         [HttpDelete]
         public ActionResult<UserDTO> Delete(int id)
         {
-            //var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
 
-            //if (user is null)
-            //{
-                //return NotFound($"User {id} not found");
-            //}
+            if (user is null)
+            {
+                return NotFound($"User {id} not found");
+            }
 
-            //_context.Users.Remove(user);
-            //_context.SaveChanges();
+            _userManager.DeleteAsync(user);
 
-            //return Ok(user);
-            return Ok();
+            var userDTO = _mapper.Map<UserDTO>(user);
+
+            return Ok(userDTO);
         }
     }
 }
