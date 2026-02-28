@@ -15,10 +15,6 @@ builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
-// Registra o serviço autenticação com os cookies do Identity
-builder.Services.AddAuthentication()
-    .AddIdentityCookies();
-
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(

@@ -25,6 +25,34 @@ namespace AuthenticationSystem.Controller
             _configuration = configuration;
         }
 
+        [HttpPost("Login")]
+        public async Task<ActionResult> Login(LoginDTO loginDTO)
+        {
+
+            var userResult = await _userManager.FindByEmailAsync(loginDTO.Email);
+
+            if (userResult is null)
+            {
+                return Unauthorized("Invalid credencials!");
+            }
+
+            var resultLogin = await _signInManager.PasswordSignInAsync(loginDTO.Email, loginDTO.Password, isPersistent: true, lockoutOnFailure: false);
+
+            if (!resultLogin.Succeeded)
+            {
+                return Unauthorized("Invalid credencials!");
+            }
+
+            return Ok("User autenticate!");
+        }
+
+        [HttpPost("Logout")]
+        public async Task<ActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok("User desconected!");
+        }
+
         [HttpPost]
         public async Task<ActionResult> RegisterUser(RegisterUserDTO registerModel)
         {
