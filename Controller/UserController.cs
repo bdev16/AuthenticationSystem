@@ -63,7 +63,7 @@ namespace AuthenticationSystem.Controller
                 return NotFound($"User {id} not found");
             }
             
-            if (userDTO.UserId != id)
+            if (userDTO.Id != id)
             {
                 return BadRequest($"The Ids informed is not equals");
             }

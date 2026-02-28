@@ -8,7 +8,7 @@ namespace AuthenticationSystem.DTO
 {
     public class UserDTO
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
         
         [Required]
         public string UserName { get; set; } = string.Empty;
