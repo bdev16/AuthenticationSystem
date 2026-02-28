@@ -13,11 +13,14 @@ namespace AuthenticationSystem.Controller
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
+        private readonly SignInManager<IdentityUser<int>> _signInManager;
         private readonly UserManager<IdentityUser<int>> _userManager;
         private readonly IConfiguration _configuration;
         
-        public AuthController(UserManager<IdentityUser<int>> userManager, IConfiguration configuration)
+        public AuthController(UserManager<IdentityUser<int>> userManager,
+        IConfiguration configuration, SignInManager<IdentityUser<int>> signInManager)
         {
+            _signInManager = signInManager;
             _userManager = userManager;
             _configuration = configuration;
         }
