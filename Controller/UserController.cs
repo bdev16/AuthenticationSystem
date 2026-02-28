@@ -1,6 +1,7 @@
 using AuthenticationSystem.Data;
 using AuthenticationSystem.DTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,6 @@ namespace AuthenticationSystem.Controller
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly UserManager<IdentityUser<int>> _userManager;
@@ -23,6 +23,7 @@ namespace AuthenticationSystem.Controller
             _userManager = userManager;
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<UserDTO>> Get()
         {
@@ -38,6 +39,7 @@ namespace AuthenticationSystem.Controller
             return Ok(usersDTO);
         }
 
+        [Authorize]
         [HttpGet("{id:int}")]
         public ActionResult<UserDTO> Get(int id)
         {
@@ -53,6 +55,7 @@ namespace AuthenticationSystem.Controller
             return Ok(userDTO);
         }
 
+        [Authorize]
         [HttpPut("id:int")]
         public async Task<ActionResult<UserDTO>> Put(int id, UserDTO userDTO)
         {
@@ -83,6 +86,7 @@ namespace AuthenticationSystem.Controller
             return Ok(userDTOResults);
         }
 
+        [Authorize]   
         [HttpDelete]
         public ActionResult<UserDTO> Delete(int id)
         {
