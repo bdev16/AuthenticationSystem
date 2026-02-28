@@ -22,5 +22,37 @@ namespace AuthenticationSystem.Controller
             _configuration = configuration;
         }
 
+        [HttpPost]
+        public async Task<ActionResult> RegisterUser(RegisterUserDTO registerModel)
+        {
+            var usernameExist = await _userManager.FindByNameAsync(registerModel.UserName);
+            var emailExist = await _userManager.FindByEmailAsync(registerModel.Email);
+
+            if (usernameExist != null)
+            {
+                return Conflict("There is already a user with this username");
+            }
+
+            if (emailExist != null)
+            {
+                return Conflict("There is already a user with this email");
+            }
+
+            var user = new IdentityUser<int>
+            {
+              UserName = registerModel.UserName,
+              Email = registerModel.Email,
+            };
+
+            var result = await _userManager.CreateAsync(user, registerModel.Password);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok("User registered");
+        }
+
     }
 }
