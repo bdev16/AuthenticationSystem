@@ -1,5 +1,6 @@
 using AuthenticationSystem.Data;
 using AuthenticationSystem.DTO;
+using AuthenticationSystem.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,16 +15,15 @@ namespace AuthenticationSystem.Controller
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserController(AppDbContext context, IMapper mapper, UserManager<IdentityUser<int>> userManager)
+        public UserController(AppDbContext context, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _mapper = mapper;
             _userManager = userManager;
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<UserDTO>> Get()
         {
